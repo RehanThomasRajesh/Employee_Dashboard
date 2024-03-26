@@ -1,9 +1,14 @@
 // server.js
 const express = require('express');
+const cors = require('cors'); // Add CORS module
 const app = express();
 
 const dbConfig = require("./db");
 const uploadExcelRoute = require('./routes/uploadExcelRoute');
+
+// Middleware
+app.use(express.json()); // Parse JSON bodies
+app.use(cors()); // Add CORS middleware
 
 // Routes
 app.use('/api/upload', uploadExcelRoute);

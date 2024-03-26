@@ -48,7 +48,7 @@ function ExcelUpload() {
   
       console.log('Filters to be sent to the backend:', filters);
   
-      const response = await axios.post('/api/upload/save-filters', filters);
+      const response = await axios.post('http://localhost:5000/api/upload/save-filters', filters);
   
       console.log('Response from the backend:', response.data);
       setShowPopup(false);

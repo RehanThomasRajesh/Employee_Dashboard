@@ -11,7 +11,7 @@ router.post('/save-filters', async (req, res) => {
     console.log('Request body:', req.body);
 
     if (!req.body || typeof req.body !== 'object') {
-      console.error('No filters received or invalid formats');
+      console.error('No filters received or invalid format');
       return res.status(400).json({ error: 'No filters received or invalid format' });
     }
 
@@ -21,13 +21,14 @@ router.post('/save-filters', async (req, res) => {
     console.log('Filters received from the frontend:', filters);
 
     // Example of saving filters to the database
-    // filters.forEach(async filter => {
-    //   const filterInstance = new Filter({
-    //     field: filter.field,
-    //     filterType: filter.filterType
-    //   });
-    //   await filterInstance.save();
-    // });
+    const filterEntries = Object.entries(filters);
+    for (const [field, filterType] of filterEntries) {
+      const filterInstance = new Filter({
+        field,
+        filterType
+      });
+      await filterInstance.save();
+    }
 
     res.status(200).send('Filters saved successfully');
   } catch (error) {
@@ -35,5 +36,6 @@ router.post('/save-filters', async (req, res) => {
     res.status(500).json({ error: 'Error saving filters to the database' });
   }
 });
+
 
 module.exports = router;
